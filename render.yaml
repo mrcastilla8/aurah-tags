@@ -1,0 +1,13 @@
+services:
+  - type: web
+    name: aura-etiquetas-privado
+    runtime: docker
+    plan: free
+    healthCheckPath: /health
+    envVars:
+      - key: AURA_MODE
+        value: render
+      - key: AURA_PASSWORD_HASH
+        sync: false
+      - key: AURA_SESSION_SECRET
+        generateValue: true

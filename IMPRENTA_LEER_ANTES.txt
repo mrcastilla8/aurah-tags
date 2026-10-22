@@ -1,0 +1,27 @@
+AURA ETIQUETAS v1.5 — ARCHIVOS PARA IMPRENTA
+===========================================
+
+1. archivo *_impresion.png o *_impresion.svg
+   SOLO CONTENIDO PARA IMPRIMIR: precio, nombre y código.
+   Sin línea impresa de corte, sin guías, sin borde negro superpuesto al troquel.
+   SVG: textos convertidos a contornos vectoriales (no requiere instalar fuentes).
+
+2. archivo *_troquel.svg
+   SOLO VECTORES DE CORTE: un path cerrado por etiqueta, sin relleno ni letras.
+   Color de corte configurable por el cliente; trazo 0,1 mm.
+   No debe imprimirse como parte del arte.
+
+3. Ambos archivos corresponden al mismo formato de hoja y mismas posiciones
+   en milímetros. No redimensionar ni usar “ajustar a página”.
+
+4. Margen de seguridad para contenido: 2 mm por defecto, configurable
+   de 1,5 a 4 mm. Precios, nombres y códigos deben quedar dentro de las
+   zonas protegidas. Si no caben, el sistema bloquea la exportación.
+
+5. Hacer una PRUEBA FÍSICA DE REGISTRO (impresión + corte) antes de imprimir
+   o troquelar el lote completo. La tolerancia mecánica de la máquina,
+   marcas de registro y sangrado dependen de la imprenta y requieren
+   confirmación; el programa no puede garantizar dicha tolerancia.
+
+6. Los stickers vacíos solo tienen contorno en el archivo de troquelado;
+   permanecen en blanco en el archivo de impresión.

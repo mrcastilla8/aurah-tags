@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#f8f6f2" />
+  <meta name="description" content="AURA Etiquetas: organiza e imprime etiquetas de joyería con archivos de troquelado SVG a escala real." />
+  <meta name="aura-csrf" content="%%AURA_CSRF%%" />
+  <title>AURA · Taller de etiquetas</title>
+  <link rel="stylesheet" href="/style.css" />
+  <script defer src="/app.js"></script>
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar">
+      <div class="brand">
+        <div class="brand-symbol" aria-hidden="true">✧</div>
+        <div class="brand-copy"><div class="brand-name">AURA<span> / STUDIO</span></div><div class="brand-subtitle">TALLER DE ETIQUETAS</div></div>
+      </div>
+      <div class="top-actions">
+        <span class="local-indicator"><span></span> Acceso privado</span>
+        <button class="btn btn-quiet" id="logoutBtn" type="button">Cerrar sesión</button>
+        <button class="btn btn-quiet" id="resetBtn" type="button">Nuevo pliego</button>
+        <button class="btn btn-primary" id="exportBundleTop" type="button"><span class="btn-icon">↓</span> Exportar pliegos</button>
+      </div>
+    </header>
+
+    <div class="intro">
+      <div class="intro-kicker"><span class="line"></span> AURA · HERRAMIENTAS DE MARCA <span class="intro-index">EDICIÓN 01 / 2026</span></div>
+      <div class="intro-heading"><div><h1>Etiquetas, listas para <em>brillar.</em></h1><p>Del inventario al pliego de impresión. Diseña, organiza y prepara el troquel de tus joyas desde un solo lugar.</p></div><div class="intro-mark" aria-hidden="true">a<span>✳</span></div></div>
+    </div>
+
+    <main class="workspace">
+      <section class="edit-column" aria-label="Panel de preparación">
+        <section class="panel import-panel" aria-labelledby="importTitle">
+          <div class="section-top"><div class="section-title"><span class="step">01</span><div><h2 id="importTitle">Tu inventario</h2><p>Importa un Excel o comienza con productos de ejemplo.</p></div></div><span class="tiny-tag">.XLSX / .XLS / .CSV</span></div>
+          <div class="upload-zone" id="dropZone" tabindex="0" role="button" aria-label="Subir Excel o CSV">
+            <div class="upload-icon" aria-hidden="true"><svg width="23" height="23" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 16V3m0 0L7 8m5-5 5 5"/><path d="M4 15v4a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-4"/></svg></div>
+            <div class="upload-copy"><strong>Arrastra tu archivo aquí</strong><span>o <u>explora tus archivos</u> para importar productos</span></div>
+            <div class="upload-side">MÁX. 15 MB</div>
+          </div>
+          <input type="file" id="fileInput" accept=".xlsx,.xlsm,.xls,.csv" hidden />
+          <div class="import-footer"><div id="fileStatus" class="muted-small">Sin archivo importado</div><div class="import-controls"><button type="button" class="link-button" id="demoBtn">Cargar ejemplo</button><span class="dot-separator">·</span><button type="button" class="link-button" id="addRowBtn">+ Añadir manualmente</button></div></div>
+        </section>
+
+        <section class="panel products-panel" aria-labelledby="productsTitle">
+          <div class="section-top products-top"><div class="section-title"><span class="step">02</span><div><h2 id="productsTitle">Detalle de productos <span class="count-bubble" id="productCount">0</span></h2><p>El nombre original se conserva; puedes definir otro más corto para imprimir.</p></div></div><button type="button" class="btn btn-mini" id="addRowBtn2">+ Fila</button></div>
+          <div class="table-toolbar"><label class="search"><svg width="16" height="16" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg><input type="search" id="searchProducts" placeholder="Buscar por nombre o código..." aria-label="Buscar productos" /></label><span class="rows-hint" id="tableShowing">0 productos</span></div>
+          <div class="table-wrapper"><table class="product-table"><thead><tr><th style="width:16%">CÓDIGO</th><th style="width:24%">NOMBRE ORIGINAL</th><th style="width:25%">NOMBRE EN ETIQUETA</th><th style="width:18%">PRECIO (S/)</th><th style="width:11%">COPIAS</th><th style="width:38px"></th></tr></thead><tbody id="productRows"><tr><td colspan="6" class="table-empty">Aún no hay productos. Importa un archivo o agrega una fila.</td></tr></tbody></table></div>
+          <div class="table-footer"><span id="productFooter">—</span><div class="pagination"><button id="prevRows" type="button" aria-label="Página anterior">‹</button><span id="rowsPage">1 / 1</span><button id="nextRows" type="button" aria-label="Página siguiente">›</button></div></div>
+          <p class="name-tip">Los nombres largos se distribuyen automáticamente en dos líneas. Puedes usar «Nombre en etiqueta» para abreviarlos sin modificar tu inventario.</p><div class="bulk-area"><div class="bulk-head"><span class="bulk-symbol">↗</span><div><strong>Edición masiva</strong><span>Aplica cambios a todos tus productos</span></div></div><div class="bulk-grid"><label><span>Multiplicar precios por</span><div class="bulk-input"><span>×</span><input type="number" id="factorInput" min="0" max="1000" step="0.01" value="1.20" /></div></label><button class="btn btn-secondary" type="button" id="multiplyBtn">Aplicar factor</button><label><span>Copias por producto</span><input type="number" min="0" max="2000" id="copiesBulkInput" value="1" /></label><button class="btn btn-secondary" type="button" id="copiesBulkBtn">Actualizar copias</button><label><span>Etiquetas vacías adicionales</span><input type="number" min="0" max="20000" id="blankLabels" value="0" /></label><div class="bulk-grid-note">Completa espacios sobrantes con stickers vacíos; puedes exportar incluso si solo deseas vacíos.</div></div><div class="bulk-foot"><span>Los cambios no modifican tu archivo Excel original.</span><button type="button" id="undoBtn" class="link-button" disabled>↶ Deshacer último cambio</button></div></div>
+        </section>
+
+        <section class="panel setup-panel" aria-labelledby="setupTitle">
+          <div class="section-top"><div class="section-title"><span class="step">03</span><div><h2 id="setupTitle">Configuración del pliego</h2><p>Medidas físicas reales, expresadas en milímetros.</p></div></div><span class="tiny-tag">PRECISIÓN MM</span></div>
+          <div class="settings-group"><div class="setting-header"><strong>Hoja de impresión</strong><span>Papel y orientación</span></div><div class="settings-grid"><label class="field"><span>Formato</span><select id="format"><option value="A4">A4 · 210 × 297 mm</option><option value="A3">A3 · 297 × 420 mm</option><option value="CARTA">Carta · 216 × 279 mm</option><option value="PERSONALIZADO">Personalizado</option></select></label><label class="field"><span>Orientación</span><select id="orientation"><option value="portrait">Vertical</option><option value="landscape">Horizontal</option></select></label></div><div class="settings-grid custom-dims hidden" id="customDimensions"><label class="field"><span>Ancho de la hoja (mm)</span><input type="number" id="sheetWidth" min="50" max="1000" value="210" step="0.1"/></label><label class="field"><span>Alto de la hoja (mm)</span><input type="number" id="sheetHeight" min="50" max="1000" value="297" step="0.1"/></label></div></div>
+          <div class="settings-group"><div class="setting-header"><strong>Forma y distribución</strong><span>Modelo joyería · alargada y entallada</span></div><div class="settings-grid"><label class="field"><span>Ancho etiqueta (mm)</span><input type="number" id="labelWidth" min="35" max="250" value="68" step="0.5" /></label><label class="field"><span>Alto etiqueta (mm)</span><input type="number" id="labelHeight" min="8" max="60" value="12" step="0.5" /></label><label class="field"><span>Margen exterior (mm)</span><input type="number" id="margin" min="0" max="40" value="8" step="0.5" /></label><label class="field"><span>Espacio horizontal (mm)</span><input type="number" id="gapX" min="0" max="30" value="2" step="0.5" /></label><label class="field"><span>Espacio vertical (mm)</span><input type="number" id="gapY" min="0" max="30" value="2" step="0.5" /></label><label class="field"><span>Resolución PNG</span><select id="dpi"><option value="600">600 DPI · Máxima calidad</option><option value="300">300 DPI · Alta calidad</option><option value="150">150 DPI · Prueba</option></select></label></div></div>
+          <div class="settings-grid"><label class="field"><span>Margen interior de seguridad (mm)</span><input type="number" id="safeMargin" min="1.5" max="4" step="0.1" value="2" /></label><p class="safe-help">La impresión se mantiene dentro de cada extremo de la etiqueta y nunca invade la línea de troquel. Valor conservador: 2 mm.</p></div><details class="advanced-settings"><summary>Opciones de tipografía y guías <span>+</span></summary><div class="settings-grid advanced-inner"><label class="field"><span>Precio · puntos</span><input type="number" id="fontPrice" value="9" min="3" max="25" step="0.2" /></label><label class="field"><span>Nombre · puntos</span><input type="number" id="fontName" value="7.4" min="3" max="25" step="0.2" /></label><label class="field"><span>Código · puntos</span><input type="number" id="fontCode" value="6.6" min="3" max="25" step="0.2" /></label><label class="checkbox-field"><input type="checkbox" id="borderPrint" checked /><span>Mostrar troquel y zona segura (solo vista previa)</span></label></div></details>
+        </section>
+      </section>
+
+      <aside class="preview-column" aria-label="Vista previa y exportación"><div class="preview-sticky">
+        <section class="preview-card"><div class="preview-header"><div><span class="eyebrow">VISTA EN TIEMPO REAL</span><h2>Tu pliego, <em>al detalle.</em></h2></div><span class="preview-live"><span></span> Vista previa</span></div>
+          <div class="stat-grid"><div class="stat"><span>ETIQUETAS</span><strong id="totalLabels">0</strong></div><div class="stat"><span>POR HOJA</span><strong id="capacity">40</strong></div><div class="stat"><span>PLIEGOS</span><strong id="totalSheets">0</strong></div></div>
+          <div class="paper-canvas"><div class="paper-stage" id="paperStage"><div class="empty-preview"><div class="empty-icon">✧</div><strong>Tu diseño aparecerá aquí</strong><p>Importa productos para visualizar cómo quedará cada hoja antes de imprimir.</p></div></div><div class="preview-error hidden" id="previewError"></div></div>
+          <p class="name-warning hidden" id="nameFitWarning" role="alert"></p><p class="blank-fill-info hidden" id="blankFillInfo" role="status"></p><div class="paper-foot"><div class="page-controls"><button id="prevPage" type="button" aria-label="Pliego anterior">←</button><span id="pageIndicator">Pliego 0 de 0</span><button id="nextPage" type="button" aria-label="Pliego siguiente">→</button></div><span id="paperMeasure" class="muted-small">A4 · 210 × 297 mm</span></div>
+        </section>
+        <section class="export-card"><div class="export-upper"><div class="export-icon">↗</div><div><strong>Archivos listos para producción</strong><p>Diseño imprimible y troquel de corte en archivos separados y alineados.</p></div></div><label class="export-format"><span>Formato de la imagen de impresión</span><select id="artworkFormat" aria-label="Formato del diseño de impresión"><option value="png">PNG · imagen de alta resolución</option><option value="svg">SVG · diseño vectorial escalable</option></select></label><label class="export-format"><span>Color del borde de troquelado</span><div class="color-row"><input type="color" id="cutColor" aria-label="Color del troquelado" value="#ff0000" /><input type="text" id="cutColorText" maxlength="7" value="#FF0000" aria-label="Código hexadecimal del color del troquelado" placeholder="#FF0000" /></div></label><button type="button" class="btn btn-primary btn-wide" id="exportBundle">Descargar PNG de impresión + SVG de corte <span>↓</span></button><div class="export-secondary"><button type="button" id="exportArtwork">Solo PNG de impresión</button><span></span><button type="button" id="exportSvg">Solo SVG de corte</button></div><p class="export-hint">La impresión lleva solo textos convertidos en curvas, sin línea de corte impresa. El SVG de troquel contiene <strong>solo</strong> contornos de corte, sin textos. Ambos tienen tamaño real en milímetros. Si hay varios pliegos, recibirás un ZIP.</p></section>
+      </div></aside>
+    </main>
+    <footer class="site-footer"><span>AURA / STUDIO — DISEÑADO PARA DETALLES QUE IMPORTAN</span><span>TU INVENTARIO SE PROCESA DE FORMA TEMPORAL EN EL SERVIDOR · SIN ALMACENAMIENTO PERMANENTE</span></footer>
+  </div>
+
+  <dialog class="mapping-dialog" id="mappingDialog" aria-labelledby="mappingTitle"><div class="dialog-top"><div><span class="eyebrow">IMPORTACIÓN DE DATOS</span><h2 id="mappingTitle">Asocia las columnas</h2><p>Confirma de qué columnas salen los datos de cada joya.</p></div><button type="button" id="closeMapping" class="modal-close" aria-label="Cerrar">×</button></div><div class="dialog-body"><label class="field hidden" id="sheetSelectWrap"><span>Hoja del archivo</span><select id="sheetSelect"></select></label><div class="mapping-grid"><label class="field"><span>Código de joya</span><select id="mapCode"></select></label><label class="field"><span>Nombre de joya</span><select id="mapName"></select></label><label class="field"><span>Precio en soles</span><select id="mapPrice"></select></label><label class="field"><span>Copias por joya</span><select id="mapCopies"></select></label></div><div class="mapping-sample"><strong>Primeras filas detectadas</strong><div id="mappingSample" class="sample-grid"></div></div><p class="dialog-note">Si no asignas «Copias», se utilizará 1 por producto. Si no se detectan encabezados, puedes asignar las columnas manualmente.</p></div><div class="dialog-footer"><button type="button" id="cancelMapping" class="btn btn-quiet">Cancelar</button><button type="button" id="confirmMapping" class="btn btn-primary">Importar productos →</button></div></dialog>
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  <div id="workingOverlay" class="working-overlay hidden" role="status" aria-live="polite"><div class="work-box"><div class="work-spinner"></div><strong id="workingTitle">Preparando pliegos…</strong><p id="workingCaption">Generando archivos a la resolución seleccionada.</p></div></div>
+</body>
+</html>
